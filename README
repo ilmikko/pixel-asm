@@ -1,0 +1,13 @@
+== Installation ==
+
+For the executables to work you need to install Dosbox.
+
+In order to compile .asm files you need TASM (Turbo Assembler)
+Just do
+
+`tasm.exe source.asm`
+`tlink.exe source.obj`
+`source.exe`
+
+There shouldn't be any errors in the .asm files.
+Contact me for more information.
