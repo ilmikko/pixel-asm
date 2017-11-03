@@ -1,0 +1,62 @@
+.model small
+.stack 256
+.code
+set_display macro
+	mov ah, 0 	; display mode function
+	mov al, 13h 	; video, 320x200 graphics, 256 colors, 1 page
+	int 10h
+endm
+
+unset_display macro
+	mov ah, 0	; display mode function
+	mov al, 3h	; text mode
+	int 10h
+endm
+
+wait_keypress macro
+	xor ax, ax
+	;mov ah, 0h
+	;int 16h
+	mov ax, 0100h
+	int 21h
+endm
+
+draw_pixel macro
+	mov cx, 319
+	mov dx, 199
+
+	mov ax, dx
+	mov bx, 320
+
+	mul bx
+	add ax, cx
+
+	mov bx, ax
+	mov ah, 15 ; white
+
+	; draw a 4x4
+	mov es:[bx], ah
+endm
+
+maxw dw 160
+maxh dw 100
+
+start:
+set_display
+
+; Set es to point to 0a000h, start of video memory
+mov bx, 0a000h
+mov es, bx
+
+; draw one pixel :3
+draw_pixel
+
+; wait for the keypress
+wait_keypress
+
+unset_display
+
+mov ax, 4c00h
+int 21h
+
+end start
